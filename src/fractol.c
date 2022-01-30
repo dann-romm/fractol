@@ -1,7 +1,22 @@
 #include "mlx.h"
 #include "fractol.h"
 
-t_complex *init_complex(long double re, long double im)
+void	usage(void)
+{
+	printf("\
+Fractol - This project is meant to create beautiful fractals\n\n\
+usage: ./fractol <argument>\n\n\
+Arguments:\n\
+	-m [power]        Mandelbroth fractal with power 2 to 5\n\
+	-j [power] <x y>  Julia fractal with power 2 to 5 from starting point\n\
+	-n [power]        Newton fractal with power 2 to 5\n\
+	-s                Burning ship fractal\n\
+	-h                Print Help (this message) and exit\n\
+");
+	exit(0);
+}
+
+t_complex	*init_complex(long double re, long double im)
 {
 	t_complex *z = (t_complex *) malloc(sizeof(t_complex));
 	z->re = re;
@@ -9,7 +24,7 @@ t_complex *init_complex(long double re, long double im)
 	return (z);
 }
 
-t_complex *set_complex(t_complex *z, long double re, long double im)
+t_complex	*set_complex(t_complex *z, long double re, long double im)
 {
 	if (!z)
 		return (z);
@@ -18,17 +33,17 @@ t_complex *set_complex(t_complex *z, long double re, long double im)
 	return (z);
 }
 
-t_complex *polar_to_dekart(t_complex *z, long double r, long double fi)
-{
-	set_complex(z, r * cos(fi), r * sin(fi));
-	return (z);
-}
+// t_complex	*polar_to_dekart(t_complex *z, long double r, long double fi)
+// {
+// 	set_complex(z, r * cos(fi), r * sin(fi));
+// 	return (z);
+// }
 
-t_complex *dekart_to_polar(t_complex *z, long double x, long double y)
-{
-	set_complex(z, sqrtl(x * x + y * y), atan2(y, x));
-	return (z);
-}
+// t_complex	*dekart_to_polar(t_complex *z, long double x, long double y)
+// {
+// 	set_complex(z, sqrtl(x * x + y * y), atan2(y, x));
+// 	return (z);
+// }
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
@@ -131,84 +146,6 @@ t_complex *set_offset(t_complex *z, long double shift_x, long double shift_y)
 	return (z);
 }
 
-void	mandelbrot_iteration(t_complex *z, t_complex *c) // z^2 + c
-{
-	long double tmp_re;
-
-	tmp_re = z->re;
-	z->re = z->re * z->re - z->im * z->im + c->re;
-	z->im = 2 * tmp_re * z->im + c->im;
-}
-
-void	z_2_p_c(t_complex *z, t_complex *c) // z^2 + c
-{
-	long double tmp_re;
-
-	tmp_re = z->re;
-	z->re = z->re * z->re - z->im * z->im + c->re;
-	z->im = 2 * tmp_re * z->im + c->im;
-}
-
-void	z_3_p_c(t_complex *z, t_complex *c) // z^3 + c
-{
-	long double tmp_re;
-
-	tmp_re = z->re;
-	z->re = (z->re * z->re * z->re) - 3 * (z->re * z->im * z->im) + c->re;
-	z->im = 3 * (tmp_re * tmp_re * z->im) - (z->im * z->im * z->im) + c->im;
-}
-
-void	z_4_p_c(t_complex *z, t_complex *c) // z^4 + c
-{
-	long double tmp_re;
-
-	tmp_re = z->re;
-	z->re = (z->re * z->re * z->re * z->re) - 6 * (z->re * z->re * z->im * z->im) + (z->im * z->im * z->im * z->im) + c->re;
-	z->im = 4 * tmp_re * z->im * (tmp_re * tmp_re - z->im * z->im) + c->im;
-}
-
-void	_3_z_2(t_complex *z) // 3z^2
-{
-	long double tmp_re;
-
-	tmp_re = z->re;
-	z->re = 3 * (z->re * z->re - z->im * z->im);
-	z->im = 6 * tmp_re * z->im;
-}
-
-void	_4_z_3(t_complex *z) // 4z^3
-{
-	long double tmp_re;
-
-	tmp_re = z->re;
-	z->re = 4 * (z->re * z->re * z->re) - 12 * (z->re * z->im * z->im);
-	z->im = 12 * (tmp_re * tmp_re * z->im) - 4 * (z->im * z->im * z->im);
-}
-
-// void	mandelbrot_iteration2(t_complex *z, t_complex *c)
-// {
-// 	long double tmp_re;
-
-// 	tmp_re = z->re;
-// 	z->re = z->re * z->re * z->re - 3 * z->re * z->im * z->im + c->re;
-// 	z->im = 3 * z->re * z->re * z->im - z->im * z->im * z->im + c->im;
-// }
-
-// int	check_point_mandelbrot(t_complex *c, int max_iterations)
-// {
-// 	t_complex *z = init_complex(0, 0);
-// 	int	i;
-
-// 	i = -1;
-// 	while (++i < max_iterations)
-// 	{
-// 		if (z->re * z->re + z->im * z->im > 225)
-// 			break ;
-// 		mandelbrot_iteration2(z, c);
-// 	}
-// 	return (i);
-// }
-
 int	color_from_iterations(int iterations, int max_iterations)
 {
 	int	intensity;
@@ -216,7 +153,7 @@ int	color_from_iterations(int iterations, int max_iterations)
 	return (intensity + (intensity << 8) + (intensity << 16)); // color in rgb: (intensity, intensity, intensity)
 }
 
-int	mandelbrot(t_complex *c) // point -> color of that point in mandelbrot set
+int	mandelbrot(t_complex *c, void (*func)(t_complex *, t_complex *)) // point -> color of that point in mandelbrot set
 {
 	int max_iterations = 1024;
 	int iterations;
@@ -234,7 +171,9 @@ int	mandelbrot(t_complex *c) // point -> color of that point in mandelbrot set
 	{
 		if (z->im * z->im + z->re * z->re > 4)
 			break ;
-		z_2_p_c(z, c);
+		// z_2_p_c(z, c);
+		func(z, c);
+		// z_4_p_c(z, c);
 	}
 
 	if (iterations == max_iterations)
@@ -347,52 +286,11 @@ void	fill_coord_plane(t_mlx_data *data)
 		while (++y < data->height)
 		{
 			z = set_complex(z, (x - data->shift_x) * data->scale, (y - data->shift_y) * data->scale);
-			// color = mandelbrot(z);
+			color = mandelbrot(z, *z_2_p_c);
 			// color = julia(z);
-			color = newton(z);
-			// if (x > 798)
-			// 	printf("(238) here %d %d\n", x, y);
+			// color = newton(z);
+			// color = ship(z); 
 			my_mlx_pixel_put(data->img, x, y, color);
-		}
-	}
-	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img->img, 0, 0);
-}
-
-// int	loop_animation(t_mlx_data *data)
-// {
-// 	static int color = 0x00000000;
-// 	int current_color;
-// 	int x;
-// 	int y;
-
-// 	y = -1;
-// 	while (++y < 720)
-// 	{
-// 		x = -1;
-// 		while (++x < 1080)
-// 		{
-// 			current_color = color;
-// 			current_color += 0x00010000 * (x * 0xFF / 1080);
-// 			current_color += 0x00000001 * (y * 0xFF / 720);
-// 			my_mlx_pixel_put(data->img, x, y, current_color);
-// 		}
-// 	}
-// 	color += 255;
-// 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img->img, 0, 0);
-// 	return (0);
-// }
-void	clear_window(t_mlx_data *data)
-{
-	int x;
-	int y;
-
-	x = -1;
-	while (++x < data->width)
-	{
-		y = -1;
-		while (++y < data->height)
-		{
-			my_mlx_pixel_put(data->img, x, y, 0x000000);
 		}
 	}
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img->img, 0, 0);
@@ -419,7 +317,7 @@ int key_num(int key, t_mlx_data *data)
 	{
 		data->scale *= 0.8;
 		
-		data->shift_x -= data->width / 2;
+		data->shift_x -= data->width / 2; // TODO: shift сделай нормальный оптимизированный клянусь ежжи
 		data->shift_x /= 0.8;
 		data->shift_x += data->width / 2;
 
@@ -444,12 +342,23 @@ int key_num(int key, t_mlx_data *data)
 	return (0);
 }
 
+void	parsing(t_mlx_data *data, char **av)
+{
+	if (!strcmp(av[1], "-m"))
+	{
+		
+	}
+}
+
 int	main(int ac, char **av)
 {
 	t_mlx_data	*data;
-	
+
+	if (ac == 1)
+		usage();
 	data = (t_mlx_data *)malloc(sizeof(t_mlx_data));
 	data->img = (t_data *)malloc(sizeof(t_data));
+	parsing(data, av);
 
 	data->width = 800;
 	data->height = 600;

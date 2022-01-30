@@ -1,0 +1,10 @@
+Fractol - This project is meant to create graphically beautiful fractals
+
+usage: ./fractol <argument>
+
+Arguments:
+   -m [power]			Mandelbroth fractal specified power 2 to 5
+   -j [power] <x> <y>	Julia fractal specified power 2 to 5
+   -s					Burning ship fractal
+   -n					Newton fractal specified power 2 to 5
+   -h					Print Help (this message) and exit

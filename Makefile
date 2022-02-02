@@ -8,9 +8,9 @@ NAME		= fractol
 SRCDIR		= ./src/
 OBJDIR		= ./obj/
 INCDIR		= ./includes/
-MLXDIR		= ./minilibx_mms_20210621/
+MLXDIR		= ./mlx/
 
-SRC			= fractol.c functions.c
+SRC			= fractol.c formulas.c complex.c fractals.c utils.c
 OBJ			= $(addprefix $(OBJDIR), $(SRC:.c=.o))
 
 all: $(NAME)

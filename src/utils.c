@@ -25,3 +25,18 @@ void	*choose_formula(int power)
 	else
 		return (0);
 }
+
+void	usage(void)
+{
+	printf("\
+Fractol - This project is meant to create beautiful fractals\n\n\
+usage: ./fractol <argument>\n\n\
+Arguments:\n\
+   -m [power]        Mandelbroth fractal with power 2 to 5\n\
+   -j [power] <x y>  Julia fractal with power 2 to 5 from starting point\n\
+   -n [power]        Newton fractal with power 2 to 5\n\
+   -s                Burning ship fractal\n\
+   -h                Print Help (this message) and exit\n\n\
+");
+	exit(0);
+}

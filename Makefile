@@ -10,7 +10,7 @@ OBJDIR		= ./obj/
 INCDIR		= ./includes/
 MLXDIR		= ./mlx/
 
-SRC			= fractol.c formulas.c complex.c fractals.c utils.c
+SRC			= fractol.c formulas.c complex.c fractals.c utils.c utils_mlx.c shift.c
 OBJ			= $(addprefix $(OBJDIR), $(SRC:.c=.o))
 
 all: $(NAME)

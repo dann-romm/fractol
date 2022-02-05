@@ -6,7 +6,7 @@
 /*   By: doalbaco <doalbaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 16:08:38 by doalbaco          #+#    #+#             */
-/*   Updated: 2022/02/05 17:38:47 by doalbaco         ###   ########.fr       */
+/*   Updated: 2022/02/05 20:01:03 by doalbaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	color_from_iterations(t_mlx_data *data, int it, int max_iterations)
 int	mandelbrot(t_mlx_data *data, t_complex *c)
 {
 	void		(*formula)(t_complex *, t_complex *);
-	const int	max_iterations = 1024;
+	const int	max_iterations = 512 * (1 + (data->scale < 0.0000001));
 	int			iterations;
 	t_complex	*z;
 
@@ -47,7 +47,7 @@ int	mandelbrot(t_mlx_data *data, t_complex *c)
 int	julia(t_mlx_data *data, t_complex *z)
 {
 	void		(*formula)(t_complex *, t_complex *);
-	const int	max_iterations = 1024;
+	const int	max_iterations = 512;
 	int			iterations;
 	t_complex	*c;
 
@@ -67,7 +67,7 @@ int	julia(t_mlx_data *data, t_complex *z)
 
 int	ship(t_mlx_data *data, t_complex *c)
 {
-	const int	max_iterations = 1024;
+	const int	max_iterations = 512;
 	int			iterations;
 	t_complex	*z;
 

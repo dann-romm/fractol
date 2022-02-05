@@ -6,11 +6,18 @@
 /*   By: doalbaco <doalbaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 16:15:59 by doalbaco          #+#    #+#             */
-/*   Updated: 2022/02/05 18:03:20 by doalbaco         ###   ########.fr       */
+/*   Updated: 2022/02/05 19:14:59 by doalbaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+
+void	errnomem_exit(const char *msg)
+{
+	errno = ENOMEM;
+	perror(msg);
+	exit(errno);
+}
 
 void	*choose_fractal(char fractal_type)
 {

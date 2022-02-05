@@ -6,7 +6,7 @@
 /*   By: doalbaco <doalbaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 16:56:58 by doalbaco          #+#    #+#             */
-/*   Updated: 2022/02/05 18:02:48 by doalbaco         ###   ########.fr       */
+/*   Updated: 2022/02/05 19:15:11 by doalbaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <math.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <errno.h>
 # include "mlx.h"
 
 typedef struct s_data
@@ -67,6 +68,7 @@ t_complex	*init_complex(long double re, long double im);
 t_complex	*set_complex(t_complex *z, long double re, long double im);
 
 // utils.c
+void		errnomem_exit(const char *msg);
 void		*choose_fractal(char fractal_type);
 void		*choose_formula(int power);
 double		abs_double(double a);

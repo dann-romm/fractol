@@ -6,7 +6,7 @@
 /*   By: doalbaco <doalbaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 16:47:01 by doalbaco          #+#    #+#             */
-/*   Updated: 2022/02/05 18:04:19 by doalbaco         ###   ########.fr       */
+/*   Updated: 2022/02/05 19:30:27 by doalbaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,15 @@ void	usage(void)
 Fractol - This project is meant to create beautiful fractals\n\n\
 usage: ./fractol <argument>\n\n\
 Arguments:\n\
-   -m [power]        Mandelbroth fractal with power 2 to 4\n\
-   -j [power] <x y>  Julia fractal with power 2 to 4 from starting point\n\
-   -n                Newton fractal\n\
-   -s                Burning ship fractal\n\
-   -h                Print Help (this message) and exit\n\n\
+   -m [power]         Mandelbroth fractal with power 2 to 4\n\
+   -j [power] [x y]   Julia fractal with power 2 to 4 from starting point\n\
+   -n                 Newton fractal\n\
+   -s                 Burning ship fractal\n\
+   -h                 Print Help (this message) and exit\n\n\
+Controls:\n\
+   arrows             Movement along the coordinate plane\n\
+   W, S, mouse wheel  Zoom in and out\n\
+   A, D               Color shifting\n\n\
 ");
 	exit(0);
 }
@@ -36,7 +40,7 @@ void	fill_coord_plane(t_mlx_data *data)
 
 	z = init_complex(0, 0);
 	if (!z)
-		return (perror("fractol "));
+		errnomem_exit("fractol");
 	fractal = choose_fractal(data->fractal_type);
 	x = (data->x_bound < 0) * (WIDTH + data->x_bound) - 1;
 	while (++x < WIDTH - (data->x_bound > 0) * (WIDTH - data->x_bound))
@@ -62,20 +66,23 @@ void	parsing(t_mlx_data *data, int ac, char **av)
 		data->fractal_type = av[1][1];
 	else
 		usage();
+	set_complex(data->point, 0, 0);
 	if (data->fractal_type == 'm' || data->fractal_type == 'j')
 	{
-		if (ac < 3 || ft_atoi(av[2]) > 4 || ft_atoi(av[2]) < 2)
+		if (ac > 2)
+		{
+			data->power = ft_atoi(av[2]);
+			if (data->fractal_type == 'j' && ac == 5)
+				set_complex(data->point, ft_atof(av[3]), ft_atof(av[4]));
+			else if (data->fractal_type == 'j' && ac == 4)
+				usage();
+		}
+		else
+			data->power = 2;
+		if (data->power < 2 || data->power > 4
+			|| (data->fractal_type == 'm' && ac > 3))
 			usage();
-		data->power = ft_atoi(av[2]);
 	}
-	if (data->fractal_type == 'j')
-	{
-		if (ac < 5)
-			usage();
-		set_complex(data->point, ft_atof(av[3]), ft_atof(av[4]));
-	}
-	else
-		set_complex(data->point, 0, 0);
 }
 
 void	data_init(t_mlx_data *data)
@@ -103,8 +110,12 @@ int	main(int ac, char **av)
 	if (ac == 1)
 		usage();
 	data = (t_mlx_data *)malloc(sizeof(t_mlx_data));
+	if (!data)
+		errnomem_exit("fractol");
 	data->img = (t_data *)malloc(sizeof(t_data));
 	data->point = (t_complex *)malloc(sizeof(t_complex));
+	if (!data->img || !data->point)
+		errnomem_exit("fractol");
 	parsing(data, ac, av);
 	data_init(data);
 	fill_coord_plane(data);

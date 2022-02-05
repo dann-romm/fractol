@@ -1,9 +1,0 @@
-fractol
-a.out
-
-mlx
-*.o
-*.d
-*.gcd
-*.DS_Store
-.vscode

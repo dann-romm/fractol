@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: doalbaco <doalbaco@student.21-school.ru    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/05 16:15:59 by doalbaco          #+#    #+#             */
+/*   Updated: 2022/02/05 16:56:41 by doalbaco         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 
 void	*choose_fractal(char fractal_type)
@@ -26,17 +38,9 @@ void	*choose_formula(int power)
 		return (0);
 }
 
-void	usage(void)
+double	abs_double(double a)
 {
-	printf("\
-Fractol - This project is meant to create beautiful fractals\n\n\
-usage: ./fractol <argument>\n\n\
-Arguments:\n\
-   -m [power]        Mandelbroth fractal with power 2 to 5\n\
-   -j [power] <x y>  Julia fractal with power 2 to 5 from starting point\n\
-   -n [power]        Newton fractal with power 2 to 5\n\
-   -s                Burning ship fractal\n\
-   -h                Print Help (this message) and exit\n\n\
-");
-	exit(0);
+	if (a < 0)
+		return (-a);
+	return (a);
 }

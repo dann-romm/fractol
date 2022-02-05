@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   shift.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: doalbaco <doalbaco@student.21-school.ru    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/05 16:08:53 by doalbaco          #+#    #+#             */
+/*   Updated: 2022/02/05 16:10:20 by doalbaco         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 
 void	zoom_in(t_mlx_data *data, int x, int y)
@@ -13,18 +25,13 @@ void	zoom_in(t_mlx_data *data, int x, int y)
 
 void	zoom_out(t_mlx_data *data, int x, int y)
 {
-	if (data->scale * 0.625 == 0)
-		printf("the approximation limit has been reached\n");
-	else
-	{
-		data->scale *= 0.625;
-		data->shift_x -= x;
-		data->shift_x /= 0.625;
-		data->shift_x += x;
-		data->shift_y -= y;
-		data->shift_y /= 0.625;
-		data->shift_y += y;
-	}
+	data->scale *= 0.625;
+	data->shift_x -= x;
+	data->shift_x /= 0.625;
+	data->shift_x += x;
+	data->shift_y -= y;
+	data->shift_y /= 0.625;
+	data->shift_y += y;
 }
 
 void	right_shift(t_mlx_data *data, int dx, int dy)
@@ -59,9 +66,8 @@ void	left_shift(t_mlx_data *data, int dx, int dy)
 	{
 		x = dx - 1;
 		while (++x < WIDTH)
-		{
-			ft_mlx_pixel_put(data->img, x - dx, y - dy, get_color(data->img, x, y));
-		}
+			ft_mlx_pixel_put(data->img, x - dx, y - dy,
+				get_color(data->img, x, y));
 	}
 	data->shift_x -= dx;
 	data->shift_y -= dy;

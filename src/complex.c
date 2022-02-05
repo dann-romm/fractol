@@ -1,8 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   complex.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: doalbaco <doalbaco@student.21-school.ru    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/05 16:07:19 by doalbaco          #+#    #+#             */
+/*   Updated: 2022/02/05 16:49:20 by doalbaco         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 
 t_complex	*init_complex(long double re, long double im)
 {
-	t_complex *z = (t_complex *) malloc(sizeof(t_complex));
+	t_complex	*z;
+
+	z = (t_complex *)malloc(sizeof(t_complex));
 	if (!z)
 		return (0);
 	z->re = re;
@@ -18,15 +32,3 @@ t_complex	*set_complex(t_complex *z, long double re, long double im)
 	z->im = im;
 	return (z);
 }
-
-// t_complex	*polar_to_dekart(t_complex *z, long double r, long double fi)
-// {
-// 	set_complex(z, r * cos(fi), r * sin(fi));
-// 	return (z);
-// }
-
-// t_complex	*dekart_to_polar(t_complex *z, long double x, long double y)
-// {
-// 	set_complex(z, sqrtl(x * x + y * y), atan2(y, x));
-// 	return (z);
-// }

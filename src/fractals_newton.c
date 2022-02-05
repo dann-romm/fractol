@@ -6,7 +6,7 @@
 /*   By: doalbaco <doalbaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 16:07:46 by doalbaco          #+#    #+#             */
-/*   Updated: 2022/02/05 16:40:26 by doalbaco         ###   ########.fr       */
+/*   Updated: 2022/02/05 17:55:33 by doalbaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,8 @@ static void	newton_iteraion(t_complex *z)
 
 int	newton(t_mlx_data *data, t_complex *z)
 {
-	const int		max_iterations = 64;
+	const int		max_iterations = 32;
 	int				iterations;
-	const double	epsilon = 0.00001;
 	t_complex		*z1;
 
 	z1 = data->point;

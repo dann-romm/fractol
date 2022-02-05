@@ -6,7 +6,7 @@
 /*   By: doalbaco <doalbaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 16:08:53 by doalbaco          #+#    #+#             */
-/*   Updated: 2022/02/05 16:10:20 by doalbaco         ###   ########.fr       */
+/*   Updated: 2022/02/05 17:48:15 by doalbaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	zoom_out(t_mlx_data *data, int x, int y)
 
 void	right_shift(t_mlx_data *data, int dx, int dy)
 {
-	int	color;
 	int	x;
 	int	y;
 
@@ -57,7 +56,6 @@ void	right_shift(t_mlx_data *data, int dx, int dy)
 
 void	left_shift(t_mlx_data *data, int dx, int dy)
 {
-	int	color;
 	int	x;
 	int	y;
 

@@ -1,6 +1,6 @@
 CC			= gcc
 RM			= rm -rf
-# CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror
 # CFLAGS		= -fsanitize=address
 
 NAME		= fractol
@@ -15,7 +15,7 @@ OBJ			= $(addprefix $(OBJDIR), $(SRC:.c=.o))
 
 all: $(NAME)
 
-$(OBJDIR)%.o : $(SRCDIR)%.c
+$(OBJDIR)%.o : $(SRCDIR)%.c $(INCDIR)fractol.h
 	$(CC) $(CFLAGS) -c $< -o $@ -I$(INCDIR) -Imlx -Ofast
 
 $(NAME): $(OBJDIR) $(OBJ)
@@ -37,14 +37,5 @@ bonus: $(NAME)
 
 clear:
 	clear
-
-# t: clear $(NAME)
-# 	@echo "____________________"
-# 	@echo $(NAME)
-# 	@echo "____________________"
-# 	@./$(NAME) 
-
-# p: $(NAME) $(BONUSNAME)
-# 	python3 temp.py
 
 .PHONY: all clean fclean re bonus

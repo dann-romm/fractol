@@ -6,7 +6,7 @@
 /*   By: doalbaco <doalbaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 16:47:01 by doalbaco          #+#    #+#             */
-/*   Updated: 2022/02/05 17:15:38 by doalbaco         ###   ########.fr       */
+/*   Updated: 2022/02/05 18:04:19 by doalbaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	usage(void)
 Fractol - This project is meant to create beautiful fractals\n\n\
 usage: ./fractol <argument>\n\n\
 Arguments:\n\
-   -m [power]        Mandelbroth fractal with power 2 to 5\n\
-   -j [power] <x y>  Julia fractal with power 2 to 5 from starting point\n\
-   -n [power]        Newton fractal with power 2 to 5\n\
+   -m [power]        Mandelbroth fractal with power 2 to 4\n\
+   -j [power] <x y>  Julia fractal with power 2 to 4 from starting point\n\
+   -n                Newton fractal\n\
    -s                Burning ship fractal\n\
    -h                Print Help (this message) and exit\n\n\
 ");
@@ -30,7 +30,6 @@ Arguments:\n\
 void	fill_coord_plane(t_mlx_data *data)
 {
 	int			(*fractal)(t_mlx_data *, t_complex *);
-	int			color;
 	t_complex	*z;
 	int			x;
 	int			y;
@@ -63,10 +62,9 @@ void	parsing(t_mlx_data *data, int ac, char **av)
 		data->fractal_type = av[1][1];
 	else
 		usage();
-	if (data->fractal_type == 'm' || data->fractal_type == 'j'
-		|| data->fractal_type == 'n')
+	if (data->fractal_type == 'm' || data->fractal_type == 'j')
 	{
-		if (ac < 3)
+		if (ac < 3 || ft_atoi(av[2]) > 4 || ft_atoi(av[2]) < 2)
 			usage();
 		data->power = ft_atoi(av[2]);
 	}
